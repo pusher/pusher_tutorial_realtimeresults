@@ -26,7 +26,7 @@ function App() {
     updateData(data =>{
       // console.log(data.message)
       // console.log({message: data.message.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)}, "kkkkkkkkkkkkk")
-      // const arr = [...data]
+      // const arr = [...dat
       data.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)
       const arr = [...data]
       return arr

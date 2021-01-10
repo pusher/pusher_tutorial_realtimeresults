@@ -13,7 +13,7 @@ export default function State(props) {
             </div>
             <div>
                 
-                <p>Total votes: {props.total.message[props.index + 6]} </p>
+                <p style={{color: "#6A52FF"}}>Total votes: {props.total.message[props.index + 6]} </p>
             </div>
         </div>     
         <div>

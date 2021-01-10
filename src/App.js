@@ -7,37 +7,38 @@ import Footer from "./userComponents/footer/footer";
 
 function App() {
   const sampleData = [
-    [ 1, '1J5FVCE', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
-    [ 1, '2J5FVCE', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
-    [ 1, '3J5FVCE', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
-    [ 1, '4J5FVCE', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
-    [ 1, '5J5FVCE', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
-    [ 1, '6J5FVCE', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ]
+    [ 1, 'Alabama', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
+    [ 1, 'Delaware', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
+    [ 1, 'Florida', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
+    [ 1, 'Hawaii', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
+    [ 1, 'Idaho', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ],
+    [ 1, 'Kentucky', 0, 0, 0, 0, 0, 0, 0, 0, 'inprogress' ]
   ]
   const [data, updateData] = useState(sampleData)
   const [total, updateTotal] = useState({message: sampleData[0]})
   const [subStatus, updateSubStatus] = useState("subscribe")
 
-  const pusher = new Pusher(process.env.REACT_APP_KEY, {
-    cluster: process.env.REACT_APP_CLUSTER
+  const pusher = new Pusher("b691171de5f8ac605664", {
+    cluster: "mt1"//process.env.REACT_APP_CLUSTER
   });
-  const channel = pusher.subscribe('my-channel');
-  channel.bind('my-event', function(dataFromServer) {
-    updateData(data =>{
-      // console.log(data.message)
-      // console.log({message: data.message.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)}, "kkkkkkkkkkkkk")
-      // const arr = [...dat
-      data.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)
-      const arr = [...data]
-      return arr
-    }
-    )
+  console.log(pusher.channel("my-channel"))
+  // const channel = pusher.subscribe('my-channel');
+  
+  // channel.bind('client-voteevent', function(dataFromServer) {
+  //   updateData(data =>{
+  //     // console.log(data.message)
+  //     // console.log({message: data.message.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)}, "kkkkkkkkkkkkk")
+  //     // const arr = [...dat
+  //     data.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)
+  //     const arr = [...data]
+  //     return arr
+  //   }
+  //   )
    
-    updateTotal(dataFromServer)
-    // updateData()
-    // alert(dataFromServer.message)
+  //   updateTotal(dataFromServer)
     
-  });
+    
+  // });
   useEffect(async ()=>{
     const res = await fetch("https://cryptic-lake-12063.herokuapp.com/")
     const json = await res.json()
@@ -50,7 +51,7 @@ function App() {
     )
   }, [])
   const beamsClient = new PusherPushNotifications.Client({
-    instanceId: process.env.REACT_APP_INSTANCEID,
+    instanceId: "6e70a6a0-a057-4c9d-b88d-95963f7fe209",
   })
 
   beamsClient.start()
@@ -80,7 +81,7 @@ function App() {
 
   return (
     <div>
-      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around"}}><Nav /><button onClick={()=> sub()} style={{height:"30px", margin: 15}}>{subStatus}</button></div>
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", backgroundColor:"#8731D2"}}><Nav /><button onClick={()=> sub()} style={{height:"30px", margin: 15}}>{subStatus}</button></div>
       <div style={{display:"flex", justifyContent:"space-around"}}><States total={total} data={data} /></div>
       <div><Footer/></div>
     </div>

@@ -18,29 +18,26 @@ function App() {
   const [total, updateTotal] = useState({message: sampleData[0]})
   const [subStatus, updateSubStatus] = useState("subscribe")
 
-  const pusher = new Pusher("b691171de5f8ac605664", {
-    cluster: "mt1"//process.env.REACT_APP_CLUSTER
+  const pusher = new Pusher(process.env.REACT_APP_KEY, {
+    cluster: process.env.REACT_APP_CLUSTER
   });
-  console.log(pusher.channel("my-channel"))
-  // const channel = pusher.subscribe('my-channel');
+  const channel = pusher.subscribe('votes');
   
-  // channel.bind('client-voteevent', function(dataFromServer) {
-  //   updateData(data =>{
-  //     // console.log(data.message)
-  //     // console.log({message: data.message.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)}, "kkkkkkkkkkkkk")
-  //     // const arr = [...dat
-  //     data.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)
-  //     const arr = [...data]
-  //     return arr
-  //   }
-  //   )
+  channel.bind('vote-event', function(dataFromServer) {
+    updateData(data =>{
+      
+      data.splice(Number(dataFromServer.message[11]), 1, dataFromServer.message)
+      const arr = [...data]
+      return arr
+    }
+    )
    
-  //   updateTotal(dataFromServer)
+    updateTotal(dataFromServer)
     
     
-  // });
+  });
   useEffect(async ()=>{
-    const res = await fetch("https://cryptic-lake-12063.herokuapp.com/")
+    const res = await fetch("https://cryptic-lake-12063.herokuapp.com/")//https://cryptic-lake-12063.herokuapp.com/
     const json = await res.json()
     updateTotal(json)
     updateData(data =>{
@@ -51,7 +48,7 @@ function App() {
     )
   }, [])
   const beamsClient = new PusherPushNotifications.Client({
-    instanceId: "6e70a6a0-a057-4c9d-b88d-95963f7fe209",
+    instanceId: process.env.REACT_APP_INSTANCEID,
   })
 
   beamsClient.start()

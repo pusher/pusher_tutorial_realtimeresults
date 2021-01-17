@@ -1,7 +1,7 @@
 import sampleData from './allregions'
 export default function Footer() {
   return (
-    <div style={{marginLeft: "1%"}}>
+    <div>
       <main style={{display:"flex",flexDirection:"column", justifyContent:"space-around", bottom:0, left:"0%"}}>
         <h4 style={{color: "#300D4F" , width:"100%", fontFamily:"Maison Neue", fontWeight: 500, fontSize: "20px"}}>Available regions</h4>
         <div className="" style={{display:"flex", flexDirection:"row", }}>

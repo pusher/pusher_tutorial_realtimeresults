@@ -18,8 +18,8 @@ function App() {
   const [total, updateTotal] = useState({message: sampleData[0]})
   const [subStatus, updateSubStatus] = useState("subscribe")
 
-  const pusher = new Pusher(process.env.REACT_APP_KEY, {//
-    cluster: process.env.REACT_APP_CLUSTER
+  const pusher = new Pusher("b691171de5f8ac605664", {//process.env.REACT_APP_KEY
+    cluster: "mt1" //process.env.REACT_APP_CLUSTER
   });
   const channel = pusher.subscribe('votes');
   
@@ -48,7 +48,7 @@ function App() {
     )
   }, [])
   const beamsClient = new PusherPushNotifications.Client({
-    instanceId:  process.env.REACT_APP_INSTANCEID,
+    instanceId: "6e70a6a0-a057-4c9d-b88d-95963f7fe209"// process.env.REACT_APP_INSTANCEID,
   })
 
   beamsClient.start()

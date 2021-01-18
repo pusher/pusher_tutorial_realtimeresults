@@ -1,10 +1,18 @@
 const express = require("express")
-const Pusher = require("pusher-js")
+const Pusher = require("pusher")
 const PushNotifications = require('@pusher/push-notifications-server');
+// const generateVotes = require("./votegenerator");
 const cors = require("cors")
 const PORT = process.env.PORT || 3001
-
-
+const mySampleRegions = [
+  {regionname: '1', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+  {regionname: '2', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+  {regionname: '3', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+  {regionname: '4', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+  {regionname: '5', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+  {regionname: '6', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+  {regionname: '7', population:2189499, turnoutpercent: 51, totalvotes: 1116644, currentvotes: 0},
+]
 const sampleData = [
   [ 1, 'Alabama', 52, 4, 19, 10, 52,4, 19, 10, 'inprogress',0 ],
   [ 1, 'Delaware', 15, 6, 10, 12, 67,10,29,22 , 'inprogress', 1 ],
@@ -21,38 +29,36 @@ const allRegions = [
 'Idaho',
 'Kentucky',
 ]
-
 const app = express()
-app.use((cors()))
+app.use(cors())
 const pusher = new Pusher({
-    appId: process.env.appId,
-    key: process.env.key,
-    secret: process.env.secret,
-    cluster: process.env.cluster,
+    appId: "1124234",
+    key: "b691171de5f8ac605664",
+    secret: "9b22dfa2b49d99cabeb2",
+    cluster: "mt1",
     useTLS: true
   });
 
+console.log(pusher)
 var i = 0
-
-
 setInterval(() => {
   if(i == 5){
     i = 0
     announce()
   }
-  pusher.trigger("my-channel", "my-event", {
-    message: sampleData[i]
+  pusher.trigger("votes", "vote-event", {
+    message: sampleData[1]
 }).then(console.log).catch(e=> console.log(e))
   i++
-}, 1000 * 60);
+}, 1000*60*20);
 
 let beamsClient = new PushNotifications({
-  instanceId: process.env.instanceId,
-  secretKey: process.env.secrekey
+  instanceId: '6e70a6a0-a057-4c9d-b88d-95963f7fe209',
+  secretKey: 'A31A51C3FD12980D9F72517FA2FBD9294A7CDC66F7076C6E3FB852F9C00B49C0'
 });
 
 function announce(){
-  beamsClient.publishToInterests(['vote-event'], {
+  beamsClient.publishToInterests(['hello'], {
     web: {
       notification: {
         title: 'Election result',
@@ -65,9 +71,9 @@ function announce(){
     console.log('Error:', error);
   });
 }
+
 app.get("/", function(req, res){
   i++
   res.send({message: sampleData[0]})
-
 })
-app.listen(PORT, ()=> console.log("running"))
+app.listen(PORT, (PORT)=> console.log("ready"))
